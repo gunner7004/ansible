@@ -1,0 +1,28 @@
+---
+- name: Mounting nfs share
+  hosts: fstabmount
+  roles:
+    - create_dir
+  vars:
+    dir_path: "{{ path }}"
+  tasks:
+    - name: Install NFS packages
+      ansible.builtin.dnf:
+        name: "{{ package_name }}"
+        state: present
+    
+    - name: Mount NFS share
+      ansible.posix.mount:
+        path: "{{ path }}"
+        src: "{{ NFS_server_ip }}:{{ nfs_share_path }}"
+        fstype: nfs
+        opts: defaults
+        state: mounted
+      notify:
+        - Add to fstab
+  
+  handlers:
+    - name: Add to fstab
+      ansible.builtin.lineinfile:
+        path: /etc/fstab
+        line: "{{ NFS_server_ip }}:{{ nfs_share_path }} {{ path }} nfs defaults 0 0"

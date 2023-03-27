@@ -1,0 +1,10 @@
+[nfsserver]
+serverd.lab.example.com
+
+[fstabmount]
+serverb.lab.example.com
+serverc.lab.example.com
+
+[pwchange]
+server[a:d].lab.example.com
+

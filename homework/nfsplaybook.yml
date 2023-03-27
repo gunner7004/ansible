@@ -1,0 +1,25 @@
+---
+- name: Creating an NFS share
+  hosts: nfsserver 
+  roles:
+    - create_dir
+  vars:
+    dir_path: "{{ nfs_share_path }}"
+  tasks:
+    - name: Install NFS packages
+      ansible.builtin.dnf:
+        name: "{{ package_name }}"
+        state: present
+
+    - name: Configuring NFS share
+      ansible.builtin.lineinfile:
+        path: /etc/exports
+        line: "{{ nfs_share_path }} *(ro,sync,no_root_squash)"
+        state: present
+    
+
+    - name: Restart NFS
+      ansible.builtin.systemd:
+        name: nfs-server
+        enabled: true
+        state: restarted

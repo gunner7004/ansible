@@ -1,0 +1,2 @@
+nfs_share_path: /data/marketing
+package_name: nfs-utils

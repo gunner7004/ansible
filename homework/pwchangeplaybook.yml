@@ -1,0 +1,13 @@
+---
+- name: Forcing users to change pw
+  hosts: pwchange
+  tasks:
+    - name: Get list of all users except root
+      shell: "grep -v '^root:' /etc/passwd | cut -d ':' -f 1"
+      register: passwd_output
+
+    - name: Force users to change password
+      command: chage -d 0 "{{ item }}"
+        
+        
+      loop: "{{ passwd_output.stdout_lines }}"

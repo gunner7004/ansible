@@ -1,0 +1,4 @@
+path: /data
+package_name: nfs-utils
+NFS_server_ip: serverd.lab.example.com
+nfs_share_path: /data/marketing 

@@ -1,0 +1,6 @@
+---
+- name: Create directory
+  ansible.builtin.file:
+    path: "{{ dir_path }}"
+    state: directory
+
